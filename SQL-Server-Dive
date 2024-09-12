@@ -1,0 +1,20 @@
+-- Step 1: Get all tables and columns
+SELECT 
+    table_name,
+    column_name
+FROM 
+    information_schema.columns
+WHERE 
+    table_schema = 'your_schema_name'
+ORDER BY 
+    table_name, column_name;
+
+-- Step 2: Un-melt the two columns with sub-column names and values
+SELECT 
+    id,
+    MAX(CASE WHEN sub_column_name = 'age' THEN sub_column_value END) AS age,
+    MAX(CASE WHEN sub_column_name = 'gender' THEN sub_column_value END) AS gender
+FROM 
+    melted_table
+GROUP BY 
+    id;
